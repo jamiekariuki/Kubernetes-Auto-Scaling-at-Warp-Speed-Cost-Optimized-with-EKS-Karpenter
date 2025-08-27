@@ -3,7 +3,9 @@ frontend:
   image:
     repository: jamiekariuki/crud-app
     tag: "1706439385d24a8ebf4ad7e8fc8efee2ccbef55e"
+    repository: 850502433430.dkr.ecr.us-east-1.amazonaws.com/frontend
+    tag: "frontend-16105052287"
 backend:
   image:
     repository: jamiekariuki/crud-app
-    tag: "1706439385d24a8ebf4ad7e8fc8efee2ccbef55e"
+    tag: "backend-16105052289"
