@@ -1,7 +1,7 @@
 terraform {
   backend "s3" {
     bucket = "XXXXXXXXXXXX-bucket-state-file-karpenter"
-    region = "ap-southeast-2"
+    region = "us-east-1"
     key    = "karpenter.tfstate"
   }
 }
