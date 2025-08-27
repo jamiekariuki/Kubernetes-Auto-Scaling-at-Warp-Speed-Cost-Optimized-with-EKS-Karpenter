@@ -1,0 +1,52 @@
+.content-box {
+    margin: 5px;
+    margin-bottom: 30px;
+    padding: 5px;
+   display: flex;
+    flex-direction: column;
+    align-items: center;
+    
+}
+
+.content-box > input {
+    width: 200px;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 93%;
+    
+    
+}
+
+.content-box > button {
+    padding: 8px 16px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+}
+
+.content-box > button:hover {
+    background-color: #0056b3;
+}
+
+
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+
+
+
+

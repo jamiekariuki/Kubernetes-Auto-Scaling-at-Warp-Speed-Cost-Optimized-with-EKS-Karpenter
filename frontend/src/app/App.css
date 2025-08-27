@@ -1,0 +1,19 @@
+/* Your styles goes here. */
+.main-component {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    
+    
+}
+
+
+@media (max-width: 1000px) {
+  .main-component {
+    flex-direction: column;
+  }
+}
+
+
+
+
