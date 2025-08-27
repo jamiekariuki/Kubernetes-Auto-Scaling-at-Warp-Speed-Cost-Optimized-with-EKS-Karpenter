@@ -113,3 +113,38 @@ resource "helm_release" "karpenter" {
   ]
 }
 
+//install metric server for HPA
+resource "helm_release" "metrics_server" {
+  name       = "metrics-server"
+  repository = "https://kubernetes-sigs.github.io/metrics-server/"
+  chart      = "metrics-server"
+  version    = "3.12.1"
+  namespace  = "kube-system"
+
+  set {
+    name  = "args[0]"
+    value = "--kubelet-insecure-tls"
+  }
+}
+
+//install argocd
+resource "helm_release" "argocd" {
+  name       = "argocd"
+  repository = "https://argoproj.github.io/argo-helm"
+  chart      = "argo-cd"
+  version    = "6.7.12" # pick latest stable version
+  namespace  = "argocd"
+
+  create_namespace = true
+
+  # Example values you can override
+  values = [
+    <<-EOF
+    server:
+      service:
+        type: LoadBalancer
+    EOF
+  ]
+}
+
+
