@@ -11,7 +11,7 @@ RUN chmod +x mvnw
 # Build the Spring Boot app
 RUN ./mvnw clean package -DskipTests
 
-# Copy the generated jar to the final image path
+# Copy the generated jar to the final image path then
 # (adjust the name if your jar is different)
 RUN mv target/*.jar app.jar
 
