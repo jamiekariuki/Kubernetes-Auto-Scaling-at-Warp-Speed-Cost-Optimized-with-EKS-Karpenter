@@ -1,0 +1,75 @@
+name: backend CI
+
+on:
+  push:
+    branches:
+    - master
+    paths:
+    - 'backend/**'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up JDK 21
+      uses: actions/setup-java@v4
+      with:
+        distribution: 'temurin'
+        java-version: '21'
+
+    - name: Build Spring Boot app
+      run: ./mvnw clean install -DskipTests
+
+  push:
+    runs-on: ubuntu-latest
+
+    needs: build
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v1
+
+    - name: Login to ECR
+
+  update-newtag-in-helm-chart:
+    runs-on: ubuntu-latest
+
+    needs: push
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        token: ${{ secrets.TOKEN }}
+
+    - name: Install yq
+      run: |
+        sudo wget https://github.com/mikefarah/yq/releases/download/v4.44.1/yq_linux_amd64 -O /usr/bin/yq
+        sudo chmod +x /usr/bin/yq
+
+    - name: Update backend tag in Helm chart
+      run: |
+        yq e '.backend.image.tag = "backend-${{ github.run_id }}"' -i helm/crud-app-chart/values.yaml
+
+    - name: Commit and push changes
+      run: |
+        git config --global user.email "jamiekariuki18@gmail.com"
+        git config --global user.name "jamiekariuki"
+        git add helm/crud-app-chart/values.yaml
+        if git diff --cached --quiet; then
+        echo "No changes to commit."
+        else
+        git commit -m "Update tag in Helm chart [skip ci]"
+        git pull --rebase origin master
+        git push origin master
+        fi
