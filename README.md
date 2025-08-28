@@ -73,7 +73,7 @@ Once applied, Argo CD is ready and syncing apps from GitHub.
 ### 4️⃣ CI/CD Workflow
 
 * **CI (GitHub Actions):**
-  Triggered on each push to `main`.
+  Triggered on each push to `master`.
 
   * Builds & pushes Docker images
   * Updates Kubernetes manifests in repo
