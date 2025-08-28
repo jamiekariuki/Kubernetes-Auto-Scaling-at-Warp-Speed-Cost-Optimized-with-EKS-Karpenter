@@ -33,14 +33,14 @@ module "vpc" {
 //EKS
 module "eks" {
   source  = "terraform-aws-modules/eks/aws"
-  version = "20.24.0"
+   version = "21.1.5"
 
-  cluster_name    = var.cluster_name
-  cluster_version = "1.30"
+  name    = var.cluster_name
+  kubernetes_version = "1.30"
 
-  cluster_endpoint_public_access  = true
+  endpoint_public_access  = true
 
-  cluster_addons = {
+  addons = {
     coredns                = {}
     eks-pod-identity-agent = {}
     kube-proxy             = {}
@@ -54,7 +54,7 @@ module "eks" {
   eks_managed_node_groups = {
     karpenter = {
       ami_type       = "AL2023_x86_64_STANDARD"
-      instance_types = ["m5.large"]
+      instance_types = ["t3.medium"]
 
       min_size     = 2
       max_size     = 10
